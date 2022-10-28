@@ -1,5 +1,4 @@
 // Tenemos un li de productos
-
 const productos = [
   {nombre: "Zapato negro", tipo: "zapato", color: "negro", img: "./taco-negro.jpg"},
   {nombre: "Zapato azul", tipo: "zapato", color: "azul", img: "./taco-azul.jpg"},
@@ -8,18 +7,20 @@ const productos = [
   {nombre: "Zapato rojo", tipo: "zapato", color: "rojo", img: "./zapato-rojo.jpg"}
 ]
 
-const li = document.getElementsByName("lista-de-productos")
-const $i = document.querySelector('.input');
-
+const li = document.getElementById("lista-de-productos")//se corrige ek metodo getElementById()
+const $i = document.querySelector('#input'); // se cambio el selector de clase
+/**
+ * Se cambio la declaracion var por let
+ */
 for (let i = 0; i < productos.length; i++) {
-  var d = document.createElement("div")
+  let d = document.createElement("div")
   d.classList.add("producto")
 
-  var ti = document.createElement("p")
+  let ti = document.createElement("p")
   ti.classList.add("titulo")
   ti.textContent = productos[i].nombre
-  
-  var imagen = document.createElement("img");
+
+  let imagen = document.createElement("img");
   imagen.setAttribute('src', productos[i].img);
 
   d.appendChild(ti)
@@ -28,36 +29,46 @@ for (let i = 0; i < productos.length; i++) {
   li.appendChild(d)
 }
 
-displayProductos(productos)
-const botonDeFiltro = document.querySelector("button");
+//displayProductos(productos)
+const botonDeFiltro = document.querySelector("#boton");
+/**
+ * se cambio la forma de invocar la funcion y se agrego el evento
+ * onclick en el html
+ */
+function accion() {
 
-botonDeFiltro.onclick = function() {
-  while (li.firstChild) {
+  
+  while(li.firstChild) {
     li.removeChild(li.firstChild);
   }
 
   const texto = $i.value;
   console.log(texto);
-  const productosFiltrados = filtrado(productos, texto );
+  const productosFiltrados = filtrado(productos, texto);
 
   for (let i = 0; i < productosFiltrados.length; i++) {
     var d = document.createElement("div")
     d.classList.add("producto")
-  
+
     var ti = document.createElement("p")
     ti.classList.add("titulo")
     ti.textContent = productosFiltrados[i].nombre
-    
+
     var imagen = document.createElement("img");
     imagen.setAttribute('src', productosFiltrados[i].img);
-  
+    
     d.appendChild(ti)
     d.appendChild(imagen)
-  
+
     li.appendChild(d)
   }
 }
 
-const filtrado = (productos = [], texto) => {
+
+/**
+ * Se indicaron los parametros que recibira la funcion
+ * 
+ */
+const filtrado = (productos, texto) => {
   return productos.filter(item => item.tipo.includes(texto) || item.color.includes(texto));
-}  
+}
